@@ -1,0 +1,156 @@
+<html>
+    <head>
+        <title>GroupStudy</title>
+        <link href="http://fonts.googleapis.com/css?family=Englebert|Open+Sans:400,600,700" rel="stylesheet" type="text/css">
+        <link rel="stylesheet" type="text/css" href="grouppage.css"/>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script type="text/javascript" src="grouppage.js"></script>
+    </head>
+    <body>
+        <div class="header">
+            <div class="slide" onclick="openSlideMenu()">
+                <i class="fa fa-bars"></i>
+            </div>
+            <div class="searcharea"><i class="fa fa-search"></i><input type="text" id="searchfiles" placeholder="Search by filename/tag/type"/></div>
+            <div class="name-pic">
+                <div class="stuff">
+                    <div class="username">
+                        Hi, <a href="profile.php?user=<?php echo $user[1];?>"><?php echo "$user[2] $user[3]"; ?></a>
+                    </div>
+                    <div class="grouptitle"><span>Welcome to&nbsp&nbsp</span><?php echo $group_name; ?></div>
+                    <ul class="navbar">
+                        <li><a href="offline.php?next=main_page">Home</a></li>
+                        <li><a href="group_setting.php">Settings</a></li>
+                        <li class="notif-btn">Notification<div class="notif-num"><?php echo $notif_num; ?></div></li>
+                        <li><a href="offline.php?next=logout">Logout</a></li>
+                    </ul>
+                    <div class="notifs notif-collapse">
+                        <div class="clearall">Clear Notifications</div>
+                        <ul class="notif-list">
+                            <div class="nai"><span>No new notifications</span></div>
+                            <?php echo $notif_str; ?>
+                        </ul>
+                    </div>
+                </div>
+                <img src=<?php echo 'pp/'.$user[11] ?> class="pp"/>
+            </div>
+            
+        </div>
+        <!-- <div class="groupname"><span> <?php echo $group_name; ?> </span></div> -->
+        <ul class="sidebar" id="sidebar">
+            <li onclick="closeSlideMenu()" class="close"><i class="fa fa-close"></i></li>
+            <li id="folderresponse"></li>
+            <li class="nodrop"><a href="profile_setting.php?from=grouppage.php">Profile Settings</a></li>
+            <li onclick="showfolders()"><i class="fa fa-angle-right" id="1"></i> Group Folders</li>
+            <li class="dropdown noshow" id="folders">
+                <ul> 
+                    <?php echo $str; ?>
+                </ul>
+            </li>
+            <li onclick="showfiles()"><i class="fa fa-angle-right" id="2"></i> All Files</li>
+            <li class="dropdown noshow" id="files">
+                <ul>
+                   <?php echo $fileList; ?>
+                </ul>
+            </li>
+            <li class="nodrop"><a target="_blank" href=<?php echo $link;?> >Open Board</a></li>
+            <li class="nodrop"><a href="invite.php">Invite Friends</a></li>
+            <li class="nodrop"><a href="timeout.html">TimeOut</a></li>
+            <li class="nodrop leave">Leave Group</li>
+        </ul>
+        <div id="main"> 
+
+            <form enctype="multipart/form-data" class="post" id="post">
+                <textarea placeholder="Type your post here" class="posttext" id="posttext" name="posttext"></textarea>
+                
+                <div class="textside">
+                    <div>
+                        <input type="file" class="filebtn" id="filebtn" name="file"/>
+                        <div class="tofolder">
+                            <button class="tofolderbtn">Add to folder</button>
+                            <input type="text" class="tofoldertext" id="tofoldertext" name="folder"/>
+                        </div>
+                    </div>
+                    <div class="tag">
+                        <button class="tagbtn">Add Tags</button>
+                        <input type="text" class="tagtext" id="tagtext" name="tagtext"/>
+                    </div>
+                    <button type="submit" class="postbtn" id="postbtn">Post</button>
+                    <input type="hidden" id="group_id" value="<?php echo $group_id; ?>"/>
+                    <input type="hidden" id="user_id" value="<?php echo $user[0]; ?>"/>
+                    <input type="hidden" id="user_name" value="<?php echo $user[1]; ?>"/>
+                </div>
+            </form>
+
+            <div class="searchresults hide visuallyhidden"> 
+                <h2 class="heading">Search results</h2>
+                <hr/>
+                <div>
+                    <div class="tab">Tags<i class="fa fa-angle-down r8 drop"></i></div>
+                    <ul id="searchtag"></ul>
+                </div>
+                <div>
+                    <div class="tab">Files<i class="fa fa-angle-down r8 drop"></i></div>
+                    <ul id="searchfile"></ul>
+                </div>
+                <div>
+                    <div class="tab">File Type<i class="fa fa-angle-down r8 drop"></i></div>
+                    <ul id="searchtype"></ul>
+                </div>
+                <div>
+                    <div class="tab">Posts<i class="fa fa-angle-down r8 drop"></i></div>
+                    <ul  id="searchpost"></ul>
+                </div>
+                <hr/>
+            </div>
+
+            <div class="feed" id="feed">
+                <!-- <span class="anchor" id="jump_id"></span>
+                <div class="apost" id='100'>
+                    <div class="cross">X</div>
+                    <h3 class="author">username</h3>
+                    <div class="time">time</div>
+                    <div class="aposttext">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quia ab sapiente eveniet doloribus debitis enim pariatur quod sequi vitae, excepturi esse est saepe, ipsa consectetur modi. Tempore repellendus placeat, inventore, asperiores et mollitia id molestias quasi rem excepturi natus dolore tenetur possimus qui. Aspernatur aperiam architecto fuga aliquid corrupti maiores!</div>
+                    <div class="commentbtn">comment</div>
+                    <div class="file-folder">file in folder</div>
+
+                    <div class="comment-list">
+                        <hr/>
+                        <div class="comment-box curr"><textarea class="com-text"></textarea><button class="com-postbtn">post</button></div>
+                        <div class="comments">
+                            <div class="comment-box" id="num"><div class="com-cross">X</div><h4 class="author">username</h4><div class="time">time</div>Lorem</div>
+                            <div class="comment-box" id="num"><div class="com-cross">X</div><h4 class="author">username</h4><div class="time">time</div>Lorem ipsum dolor si</div>
+                        </div>
+                    </div>
+                </div> -->
+                <?php echo $feed; ?>
+            </div>
+
+            <div id="footer">
+                <p>Copyright (c) 2018 GroupStudy. All rights reserved.</p>
+            </div>
+
+        </div>
+        
+        <div class="chatarea">
+            <div class="chattop"><button id="offline"></button>Chat area</div>
+            <hr style="margin:0px;"/>
+            <div class="chatunder">
+                <div class="chat_switch mem">Members</div>
+                <div class="chat_switch msg">Chat</div>
+            </div>
+            <hr style="margin:0px;"/>
+            <ul class="chatlist" id="namelist">
+                <?php echo $userList; ?>
+            </ul>
+            <div class="chatlist" id="chatlog">
+            </div>
+            <div class="chat">
+                <input type="text"  id="chattext"/>
+                <button id="chatsend">Send</button>
+            </div>
+        </div>
+        <!-- <?php echo $html_list ?> list of assoc of all id->users; find a way to send it to phps through ajax to avoid recalling database-->
+      </body>
+</html>

@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html>
+	<head>
+        <title>GroupStudy</title>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+		<link rel="stylesheet" type="text/css" href="invite.css"/>
+        <script type="text/javascript" src="invite.js"></script>
+	</head>
+	<body>
+		<div class="title">Invite friends to Your Group!</div>
+		<div class="back">
+		<div class="error">Go ahead! Expand your Group!</div>
+		<hr>
+		<div class="form">
+
+            <div> 
+                Usernames: 
+                <div class="shift">  
+                    <input type="text" class="name" placeholder="type here..."/>
+                    <ul class="list hide">
+                        <!-- <div class=\"nai\"><i>No such user</i></div>
+                        <li class="list-item"><strong>selected part</strong>rest of name<input type="hidden" value="nameofperson"></li> -->
+                    </ul>
+                    <div class="tags">
+                    <!-- <div class="tag-item"><div class="value">tag-polo</div><div class="del"> x&nbsp</div></div>
+                        <div class="tag-item"><div class="value">arek</div><div class="del"> x&nbsp</div></div> -->
+                    </div>        
+                </div>
+            </div>
+            <div> Invitation message:<textarea class="shift" id="msg"></textarea> </div>
+            <div> Group Password: <input class="shift" type="password" id='pass' placeholder="Type the current password"/> </div>
+			<div>
+				<input type="button" onclick="redirect('grouppage.php')" value="Cancel"/>
+				<input type="button" value="Send Invite" id="send"/>
+			</div>
+			
+        </div>
+		</div>
+	</body>
+</html>
